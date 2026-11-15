@@ -14,7 +14,6 @@ const isGuest = url.searchParams.has("events");
 const invited = new Set((url.searchParams.get("events") || "").split(","));
 const visible = ceremonies.filter(event => !isGuest || invited.has(event.id));
 byId("host").hidden = isGuest;
-byId("count").textContent = visible.length + (visible.length === 1 ? " ceremony" : " ceremonies");
 if (isGuest && visible.length) {
   const dates = visible.map(event => event.day);
   byId("date-range").textContent = dates.join(", ") + " February 2027";
@@ -30,15 +29,69 @@ function showCeremony(event) {
   byId("event-place").textContent = event.venue;
   byId("detail").showModal();
 }
-for (const event of visible) {
-  const card = document.createElement("button");
-  card.type = "button";
-  card.className = "card";
-  card.setAttribute("aria-label", "Open " + event.name + " invitation");
-  card.innerHTML = '<div class="art"><img alt="" src="assets/' + event.id + '.webp"><span class="urdu" lang="ur" dir="rtl">' + event.urdu + '</span></div><div class="card-body"><h3>' + event.name + '</h3><span class="card-meta">' + icon("calendar") + shortDate(event) + '</span><span class="card-open">' + icon("arrow") + '</span></div>';
-  card.addEventListener("click", () => showCeremony(event));
-  byId("cards").append(card);
+const chapters = [];
+for (const [index, event] of visible.entries()) {
+  const chapter = document.createElement("article");
+  chapter.className = "chapter " + event.id;
+  chapter.id = "ceremony-" + event.id;
+  chapter.setAttribute("aria-labelledby", "heading-" + event.id);
+  const number = String(index + 1).padStart(2, "0");
+  chapter.innerHTML = `
+    <div class="chapter-stage">
+      <div class="chapter-paper">
+        <figure><img src="assets/${event.id}.webp" loading="lazy" alt=""><figcaption lang="ur" dir="rtl">${event.urdu}</figcaption></figure>
+        <div class="chapter-copy">
+          <p class="chapter-n">Chapter ${number} <i></i></p>
+          <h3 id="heading-${event.id}">${event.name}</h3>
+          <p class="wording">${event.words}</p>
+          <div class="event-meta"><span>${icon("calendar")}${shortDate(event)} · ${event.time}</span><span>${icon("pin")}${event.venue}</span></div>
+          <button class="event-button" aria-label="Open ${event.name} invitation">View invitation ${icon("arrow")}</button>
+        </div>
+      </div>
+      <div class="leaf left" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>A &amp; Z</i></div></div>
+      <div class="leaf right" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>A &amp; Z</i></div></div>
+    </div>`;
+  chapter.querySelector("button").addEventListener("click", () => showCeremony(event));
+  byId("cards").append(chapter);
+  const link = document.createElement("a");
+  link.href = "#" + chapter.id;
+  link.textContent = event.name;
+  byId("chapters-nav").append(link);
+  chapters.push({ chapter, link });
 }
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+const hero = byId("invitation");
+let scrollFrame = 0;
+const limit = n => Math.max(0, Math.min(1, n));
+function drawScroll() {
+  scrollFrame = 0;
+  const h = window.innerHeight;
+  const heroHeight = hero.offsetHeight;
+  const departure = limit(-hero.getBoundingClientRect().top / heroHeight);
+  hero.style.setProperty("--travel", reduced.matches ? 0 : departure);
+  let activeIndex = -1;
+  for (const [i, { chapter }] of chapters.entries()) {
+    const top = chapter.getBoundingClientRect().top;
+    const progress = reduced.matches ? 1 : limit((h * .98 - top) / (h * .46));
+    const ease = progress * progress * (3 - 2 * progress);
+    chapter.style.setProperty("--open", ease.toFixed(4));
+    chapter.classList.toggle("unfolding", progress < .999 && !reduced.matches);
+    if (top < h * .65) activeIndex = i;
+  }
+  chapters.forEach(({ link }, i) => {
+    if (i === activeIndex) link.setAttribute("aria-current", "step");
+    else link.removeAttribute("aria-current");
+  });
+  updateNavigation();
+}
+function queueScroll() {
+  if (!scrollFrame) scrollFrame = requestAnimationFrame(drawScroll);
+}
+window.addEventListener("scroll", queueScroll, { passive: true });
+window.addEventListener("resize", queueScroll);
+reduced.addEventListener("change", queueScroll);
+window.addEventListener("pageshow",queueScroll);
+drawScroll();
 if (!visible.length) {
   byId("cards").textContent = "This link has no valid ceremony cards. Please ask your host for a new invitation.";
   byId("date-range").textContent = "February 2027";
@@ -98,7 +151,7 @@ function updateNavigation() {
     link.classList.toggle("current", atEvents === (index === 1));
   });
 }
-window.addEventListener("scroll", updateNavigation, { passive: true });
+
 // An original, gently plucked pentatonic phrase. Sound starts on an explicit tap.
 let audio;
 let interval;
