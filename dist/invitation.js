@@ -92,7 +92,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const hero = byId("invitation");
 let scrollFrame = 0;
 const limit = n => Math.max(0, Math.min(1, n));
-const curtainStart = 0.70;
+const curtainStart = 0.90;
 function drawScroll() {
   scrollFrame = 0;
   const h = window.innerHeight;
