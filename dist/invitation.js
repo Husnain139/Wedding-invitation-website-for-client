@@ -75,8 +75,8 @@ for (const [index, event] of visible.entries()) {
           <button class="event-button" aria-label="Open ${event.name} invitation">View invitation ${icon("arrow")}</button>
         </div>
       </div>
-      <div class="leaf left" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>Z &amp; F</i></div></div>
-      <div class="leaf right" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>Z &amp; F</i></div></div>
+      <div class="leaf left" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>F &amp; Z</i></div></div>
+      <div class="leaf right" aria-hidden="true"><div><span>Wedding invitation</span><strong>${event.name}</strong><i>F &amp; Z</i></div></div>
     </div>`;
   chapter.querySelector("button").addEventListener("click", () => showCeremony(event));
   byId("cards").append(chapter);
@@ -135,7 +135,7 @@ function updateLink() {
   byId("preview").hidden = byId("whatsapp").hidden = !checked.length;
   byId("copy").disabled = !checked.length;
   byId("preview").href = link.href;
-  byId("whatsapp").href = "https://wa.me/?text=" + encodeURIComponent("Please join us to celebrate our wedding. With love, Zarafshan & Faizan\n" + link.href);
+  byId("whatsapp").href = "https://wa.me/?text=" + encodeURIComponent("Please join us to celebrate our wedding. With love, Faizan & Zarafshan\n" + link.href);
   byId("status").textContent = checked.length ? "" : "Choose at least one ceremony.";
 }
 if (!isGuest) {
