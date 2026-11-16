@@ -27,6 +27,7 @@ if (visible.length === 1) {
 }
 function showCeremony(event) {
   const isBarat = event.id === "baraat";
+  byId("detail").dataset.ceremony = event.id;
   byId("standard-details").hidden = isBarat;
   byId("formal-details").hidden = !isBarat;
   byId("detail").querySelector(".kicker").hidden = isBarat;
@@ -60,6 +61,7 @@ const chapters = [];
 for (const [index, event] of visible.entries()) {
   const chapter = document.createElement("article");
   chapter.className = "chapter " + event.id;
+  chapter.dataset.ceremony = event.id;
   chapter.id = "ceremony-" + event.id;
   chapter.setAttribute("aria-labelledby", "heading-" + event.id);
   const number = String(index + 1).padStart(2, "0");
