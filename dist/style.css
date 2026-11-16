@@ -55,9 +55,43 @@ body {
   box-shadow: var(--glass-rim);
 }
 .chapter-copy {
-  background: linear-gradient(156deg, #fff6 0%, transparent 52%, #fdebf740 95%);
   height: 100%;
   align-content: center;
+}
+.chapter-copy, #detail .sheet-body {
+  --ink: #fff6ea;
+  --muted: #f7e3df;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--ink);
+  background: #612837;
+  box-shadow: inset 0 1px 0 #ffe5db87, inset 0 0 0 1px #ffc6c133;
+}
+.chapter-copy::before, #detail .sheet-body::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, #ffdbcb25, transparent 28%, #3516273b 72%, #ffbfbb14),
+    url("assets/rose-glass.webp") center / cover;
+  filter: blur(1.6px);
+}
+/* Fit the petal border to the full programme on the longer invitation. */
+#detail .sheet-body::before {
+  background-size: cover, 100% 100%;
+}
+.chapter-copy .chapter-n, .chapter-copy .event-meta svg,
+#detail .kicker, #detail .detail-row .icon, #detail #formal-details .invocation {
+  color: #ffe2cc;
+}
+#detail .detail-row, #detail .programme dt, #detail .programme dd {
+  border-color: #ffe1d640;
+}
+.chapter-copy .event-button, #detail .primary {
+  --amethyst: linear-gradient(165deg, #875163, #704252 38%, #54293a 66%, #65354b);
 }
 .chapter-paper figcaption {
   background: linear-gradient(155deg, #6e5a6db8, #302636da);
