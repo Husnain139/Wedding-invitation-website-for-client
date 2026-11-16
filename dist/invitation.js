@@ -4,7 +4,7 @@ const ceremonies = [
   { id: "mehndi", name: "Mehndi", urdu: "مہندی", date: "2027-02-19", time: "6:30 PM", venue: "The Marigold Courtyard, Lahore", words: "Join us under the marigolds for an evening of henna, dholki and dancing." },
   { id: "baraat", name: "Barat", urdu: "بارات", date: "2026-12-19", time: "01:00 PM", lunch: "02:00 PM",
     venue: "Masood Marquee", address: "818-N, Pounch Road, Samanabad, Lahore",
-    words: "Mr. & Mrs. M. Saeed invite you to the wedding ceremony of their beloved daughter Zarafshan Saeed with Faizan Moazzam." },
+    words: "Miss & Mrs. Moazzam invite you to the wedding ceremony of their beloved daughter Zarafshan Saeed with Faizan Moazzam." },
   { id: "walima", name: "Walima", urdu: "ولیمہ", date: "2027-02-21", time: "1:00 PM", venue: "The Pearl Terrace, Lahore", words: "Please join us for our Walima luncheon as we begin married life surrounded by family and friends." }
 ];
 const byId = id => document.getElementById(id);
@@ -36,7 +36,7 @@ function showCeremony(event) {
   if (isBarat) {
     byId("formal-details").innerHTML = `
       <p class="invocation" dir="rtl" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-      <p class="hosts">Mr. &amp; Mrs. M. Saeed</p>
+      <p class="hosts">Miss &amp; Mrs. Moazzam</p>
       <p class="request">Request the honour of your presence at the wedding ceremony of their beloved daughter</p>
       <p class="couple-names">Zarafshan Saeed <em>with</em> Faizan Moazzam</p>
       <p>Son of Mr. &amp; Mrs. Mazzam</p>
