@@ -1,14 +1,25 @@
 // Nikah, Mehndi and Walima still use the original sample schedule. Each guest link contains only the selected ceremony IDs.
 const ceremonies = [
-  { id: "nikah", name: "Nikah", urdu: "نکاح", date: "2027-02-18", time: "4:00 PM", venue: "The Garden Pavilion, Lahore", words: "Join our families for the signing of our Nikah and a prayer for our life together." },
-  { id: "mehndi", name: "Mehndi", urdu: "مہندی", date: "2027-02-19", time: "6:30 PM", venue: "The Marigold Courtyard, Lahore", words: "Join us under the marigolds for an evening of henna, dholki and dancing." },
+  { id: "nikah", name: "Nikah", urdu: "نکاح", date: "2027-02-18", time: "4:00 PM", words: "Join our families for the signing of our Nikah and a prayer for our life together." },
+  { id: "mehndi", name: "Mehndi", urdu: "مہندی", date: "2027-02-19", time: "6:30 PM", venue: "Oswa Grammar School", mapUrl: "https://www.google.com/maps/place/Oswa+Grammar+School/@31.4290207,74.2898304,17z/data=!3m1!4b1!4m6!3m5!1s0x39190123dc76a3c9:0xdcff9100ff67027f!8m2!3d31.4290161!4d74.2924053!16s%2Fg%2F11bz_141rq?entry=tts&g_ep=EgoyMDI2MTExMC4wIOC7DCoASAFQAw%3D%3D&skid=6703ef41-0118-4e3e-b4fe-e91d50f55525", words: "Join us under the marigolds for an evening of henna, dholki and dancing." },
   { id: "baraat", name: "Barat", urdu: "بارات", date: "2026-12-19", time: "01:00 PM", lunch: "02:00 PM",
-    venue: "Masood Marquee", address: "818-N, Pounch Road, Samanabad, Lahore",
+    venue: "Masood Marquee", mapUrl: "https://maps.app.goo.gl/uzpRe2q83tdxhfNS9", address: "818-N, Pounch Road, Samanabad, Lahore",
     words: "Miss & Mrs. Moazzam invite you to the wedding ceremony of their beloved daughter Zarafshan Saeed with Faizan Moazzam." },
-  { id: "walima", name: "Walima", urdu: "ولیمہ", date: "2027-02-21", time: "1:00 PM", venue: "The Pearl Terrace, Lahore", words: "Please join us for our Walima luncheon as we begin married life surrounded by family and friends." }
+  { id: "walima", name: "Walima", urdu: "ولیمہ", date: "2027-02-21", time: "1:00 PM", venue: "Golden Fort Banquet Hall", mapUrl: "https://maps.app.goo.gl/HHyoXtQf5kTKY7qEA", words: "Please join us for our Walima luncheon as we begin married life surrounded by family and friends." }
 ];
 const byId = id => document.getElementById(id);
 const icon = id => '<svg class="icon" aria-hidden="true"><use href="#' + id + '"/></svg>';
+function venueLink(event) {
+  if (!event.mapUrl) return "";
+  const link = document.createElement("a");
+  link.className = "venue-link";
+  link.href = event.mapUrl;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = event.venue + " ↗";
+  link.setAttribute("aria-label", event.venue + " – open in Google Maps");
+  return link.outerHTML;
+}
 function formatDate(event, options) {
   return new Intl.DateTimeFormat("en-GB", { ...options, timeZone: "UTC" }).format(new Date(event.date + "T12:00:00Z"));
 }
@@ -18,6 +29,7 @@ const isGuest = url.searchParams.has("events");
 const invited = new Set((url.searchParams.get("events") || "").split(","));
 const visible = ceremonies.filter(event => !isGuest || invited.has(event.id));
 byId("host").hidden = isGuest;
+byId("hero-place").hidden = visible.length === 1 && !visible[0].mapUrl;
 if (visible.length === 1) {
   byId("date-range").textContent = formatDate(visible[0], { day: "numeric", month: "long", year: "numeric" });
 } else if (visible.length > 1 && visible.every(event => event.date.slice(0, 7) === visible[0].date.slice(0, 7))) {
@@ -46,13 +58,14 @@ function showCeremony(event) {
         <dt>Date</dt><dd>19th December 2026</dd>
         <dt>Barat Arrival</dt><dd>${event.time}</dd>
         <dt>Lunch</dt><dd>${event.lunch}</dd>
-        <dt>Venue</dt><dd>${event.venue}</dd>
+        <dt>Venue</dt><dd>${venueLink(event)}</dd>
         <dt>Address</dt><dd>${event.address}</dd>
       </dl>`;
   } else {
     byId("event-wording").textContent = event.words;
     byId("event-date").textContent = formatDate(event, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · " + event.time + " PKT";
-    byId("event-place").textContent = event.venue;
+    byId("event-place").innerHTML = venueLink(event);
+    byId("event-place").parentElement.hidden = !event.mapUrl;
   }
   byId("detail").showModal();
   byId("detail").scrollTop = 0;
@@ -73,7 +86,7 @@ for (const [index, event] of visible.entries()) {
           <p class="chapter-n">Chapter ${number} <i></i></p>
           <h3 id="heading-${event.id}">${event.name}</h3>
           <p class="wording">${event.words}</p>
-          <div class="event-meta"><span>${icon("calendar")}${shortDate(event)} · ${event.time}</span><span>${icon("pin")}${event.venue}</span></div>
+          <div class="event-meta"><span>${icon("calendar")}${shortDate(event)} · ${event.time}</span>${event.mapUrl ? `<span>${icon("pin")}${venueLink(event)}</span>` : ""}</div>
           <button class="event-button" aria-label="Open ${event.name} invitation">View invitation ${icon("arrow")}</button>
         </div>
       </div>
@@ -104,10 +117,11 @@ function drawScroll() {
     const { top, height } = chapter.getBoundingClientRect();
     // On short screens, measure entry against the portion that can fit at once.
     const entered = (h - top) / Math.min(height, h);
-    const progress = reduced.matches ? 1 : limit((entered - curtainStart) / (1 - curtainStart));
-    const ease = progress * progress * (3 - 2 * progress);
-    chapter.style.setProperty("--open", ease.toFixed(4));
-    chapter.classList.toggle("unfolding", progress < .999 && !reduced.matches);
+    if (reduced.matches || entered >= curtainStart) {
+      chapter.classList.add("curtains-open");
+    } else if (top >= h) {
+      chapter.classList.remove("curtains-open");
+    }
     if (top < h * .65) activeIndex = i;
   }
   chapters.forEach(({ link }, i) => {
