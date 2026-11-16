@@ -92,6 +92,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const hero = byId("invitation");
 let scrollFrame = 0;
 const limit = n => Math.max(0, Math.min(1, n));
+const curtainStart = 0.70;
 function drawScroll() {
   scrollFrame = 0;
   const h = window.innerHeight;
@@ -100,8 +101,10 @@ function drawScroll() {
   hero.style.setProperty("--travel", reduced.matches ? 0 : departure);
   let activeIndex = -1;
   for (const [i, { chapter }] of chapters.entries()) {
-    const top = chapter.getBoundingClientRect().top;
-    const progress = reduced.matches ? 1 : limit((h * .98 - top) / (h * .46));
+    const { top, height } = chapter.getBoundingClientRect();
+    // On short screens, measure entry against the portion that can fit at once.
+    const entered = (h - top) / Math.min(height, h);
+    const progress = reduced.matches ? 1 : limit((entered - curtainStart) / (1 - curtainStart));
     const ease = progress * progress * (3 - 2 * progress);
     chapter.style.setProperty("--open", ease.toFixed(4));
     chapter.classList.toggle("unfolding", progress < .999 && !reduced.matches);
