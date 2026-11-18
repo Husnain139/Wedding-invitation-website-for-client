@@ -51,15 +51,17 @@ function showCeremony(event) {
       <p class="hosts">Miss &amp; Mrs. Moazzam</p>
       <p class="request">Request the honour of your presence at the wedding ceremony of their beloved daughter</p>
       <div class="couple-names name-stack"><span>Faizan Moazzam</span><small>Son of Mr. &amp; Mrs. Mazzam</small><em>with</em><span>Zarafshan Saeed</span></div>
-      <h3>Programme In Sha Allah</h3>
-      <dl class="programme">
-        <dt>Day</dt><dd>${formatDate(event, { weekday: "long" })}</dd>
-        <dt>Date</dt><dd>19th December 2026</dd>
-        <dt>Barat Arrival</dt><dd>${event.time}</dd>
-        <dt>Lunch</dt><dd>${event.lunch}</dd>
-        <dt>Venue</dt><dd>${venueLink(event)}</dd>
-        <dt>Address</dt><dd>${event.address}</dd>
-      </dl>`;
+      <section class="wedding-programme" aria-labelledby="programme-heading">
+        <h3 id="programme-heading">Programme <span>In Sha Allah</span></h3>
+        <p class="programme-day">${formatDate(event, { weekday: "long" })}</p>
+        <p class="programme-date"><time datetime="${event.date}">19<sup>th</sup> December 2026</time></p>
+        <dl class="programme-times">
+          <div><dt>Barat Arrival</dt><dd>${event.time}</dd></div>
+          <div><dt>Lunch</dt><dd>${event.lunch}</dd></div>
+        </dl>
+        <p class="programme-venue">${venueLink(event)}</p>
+        <p class="programme-address">${event.address}</p>
+      </section>`;
   } else {
     byId("event-wording").textContent = event.words;
     byId("event-date").textContent = formatDate(event, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · " + event.time + " PKT";
