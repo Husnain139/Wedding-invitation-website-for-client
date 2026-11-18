@@ -49,8 +49,7 @@ function showCeremony(event) {
     <div class="couple-names name-stack">
       <span>Faizan Moazzam</span>
       ${isBarat ? '<small>Son of Mr. &amp; Mrs. Mazzam</small>' : ""}
-      <em>with</em>
-      <span>Zarafshan Saeed</span>
+      ${event.id !== "mehndi" ? '<em>with</em><span>Zarafshan Saeed</span>' : ""}
     </div>
     <section class="wedding-programme" aria-labelledby="programme-heading">
       <h3 id="programme-heading">Programme <span>In Sha Allah</span></h3>
