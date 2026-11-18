@@ -352,3 +352,11 @@ footer { background: #ffeff748; border-color: #fff9; }
   .hero h1.name-stack em { font-size: 22px; margin: 4px 0; }
   .couple-names { font-size: clamp(46px, 13.7vw, 61px); }
 }
+
+@media (max-width: 380px) {
+  .programme-times > div { padding-inline: 12px; }
+  .programme-times dt { font-size: 18px; }
+  .programme-times dd { font-size: 22px; white-space: nowrap; }
+  .programme-venue { font-size: 26px; }
+  .programme-date { font-size: 25px; }
+}
