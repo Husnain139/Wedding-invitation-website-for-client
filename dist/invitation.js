@@ -4,7 +4,7 @@ const ceremonies = [
   { id: "mehndi", name: "Mehndi", urdu: "مہندی", date: "2027-02-19", time: "6:30 PM", venue: "Oswa Grammar School", mapUrl: "https://www.google.com/maps/place/Oswa+Grammar+School/@31.4290207,74.2898304,17z/data=!3m1!4b1!4m6!3m5!1s0x39190123dc76a3c9:0xdcff9100ff67027f!8m2!3d31.4290161!4d74.2924053!16s%2Fg%2F11bz_141rq?entry=tts&g_ep=EgoyMDI2MTExMC4wIOC7DCoASAFQAw%3D%3D&skid=6703ef41-0118-4e3e-b4fe-e91d50f55525", words: "Join us under the marigolds for an evening of henna, dholki and dancing." },
   { id: "baraat", name: "Barat", urdu: "بارات", date: "2026-12-19", time: "01:00 PM", lunch: "02:00 PM",
     venue: "Masood Marquee", mapUrl: "https://maps.app.goo.gl/uzpRe2q83tdxhfNS9", address: "818-N, Pounch Road, Samanabad, Lahore",
-    words: "Miss & Mrs. Moazzam invite you to the wedding ceremony of their beloved daughter Zarafshan Saeed with Faizan Moazzam." },
+    words: "Miss & Mrs. Moazzam invite you to the wedding ceremony of Faizan Moazzam and Zarafshan Saeed." },
   { id: "walima", name: "Walima", urdu: "ولیمہ", date: "2027-02-21", time: "1:00 PM", venue: "Golden Fort Banquet Hall", mapUrl: "https://maps.app.goo.gl/HHyoXtQf5kTKY7qEA", words: "Please join us for our Walima luncheon as we begin married life surrounded by family and friends." }
 ];
 const byId = id => document.getElementById(id);
@@ -50,8 +50,7 @@ function showCeremony(event) {
       <p class="invocation" dir="rtl" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
       <p class="hosts">Miss &amp; Mrs. Moazzam</p>
       <p class="request">Request the honour of your presence at the wedding ceremony of their beloved daughter</p>
-      <p class="couple-names">Zarafshan Saeed <em>with</em> Faizan Moazzam</p>
-      <p>Son of Mr. &amp; Mrs. Mazzam</p>
+      <div class="couple-names name-stack"><span>Faizan Moazzam</span><small>Son of Mr. &amp; Mrs. Mazzam</small><em>with</em><span>Zarafshan Saeed</span></div>
       <h3>Programme In Sha Allah</h3>
       <dl class="programme">
         <dt>Day</dt><dd>${formatDate(event, { weekday: "long" })}</dd>
@@ -154,7 +153,7 @@ function updateLink() {
   byId("preview").hidden = byId("whatsapp").hidden = !checked.length;
   byId("copy").disabled = !checked.length;
   byId("preview").href = link.href;
-  byId("whatsapp").href = "https://wa.me/?text=" + encodeURIComponent("Please join us to celebrate our wedding. With love, Faizan & Zarafshan\n" + link.href);
+  byId("whatsapp").href = "https://wa.me/?text=" + encodeURIComponent("Please join us to celebrate our wedding. With love,\nFaizan Moazzam\nZarafshan Saeed\n" + link.href);
   byId("status").textContent = checked.length ? "" : "Choose at least one ceremony.";
 }
 if (!isGuest) {

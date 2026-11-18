@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#272036">
-  <meta name="description" content="Faizan and Zarafshan invite you to celebrate their wedding in Lahore. Open your invitation for the ceremony dates and venues.">
-  <title>Faizan &amp; Zarafshan · Wedding Invitation</title>
+  <meta name="description" content="Faizan Moazzam and Zarafshan Saeed invite you to celebrate their wedding in Lahore. Open your invitation for the ceremony dates and venues.">
+  <title>Faizan Moazzam &amp; Zarafshan Saeed · Wedding Invitation</title>
   <link rel="icon" href="assets/flower.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/twilight.webp">
   <link rel="stylesheet" href="style.css">
@@ -31,11 +31,11 @@
   <main>
     <section class="hero" id="invitation" aria-labelledby="title">
       <div class="landscape" aria-hidden="true"></div><div class="hero-shade"></div>
-      <div class="actors" role="img" aria-label="Faizan and Zarafshan holding hands in a Lahore garden at dusk"><img id="couple-fallback" src="assets/couple.webp" alt="" fetchpriority="high"></div>
+      <div class="actors" role="img" aria-label="Faizan Moazzam and Zarafshan Saeed holding hands in a Lahore garden at dusk"><img id="couple-fallback" src="assets/couple.webp" alt="" fetchpriority="high"></div>
       <canvas id="motes" aria-hidden="true"></canvas>
       <div class="hero-layout"><div class="hero-copy">
         <p class="invocation hero-invocation" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-        <h1 id="title">Faizan <em>&amp;</em> Zarafshan</h1>
+        <h1 id="title" class="name-stack"><span>Faizan Moazzam</span><em>&amp;</em><span>Zarafshan Saeed</span></h1>
         <p class="welcome">Together with our families, we invite you<br class="wide"> to celebrate our wedding.</p>
         <div class="hero-meta"><span><svg class="icon"><use href="#calendar"/></svg><b id="date-range">See ceremony dates</b></span><span id="hero-place"><svg class="icon"><use href="#pin"/></svg>Lahore, Pakistan</span></div>
         <a class="cta" href="#celebrations"><svg class="icon"><use href="#envelope"/></svg> Open invitation <svg class="icon"><use href="#arrow"/></svg></a>
@@ -48,8 +48,8 @@
       <div id="cards" class="cards"></div>
     </section>
   </main>
-  <footer><span class="monogram">F<span>&amp;</span>Z</span><span>Faizan &amp; Zarafshan</span><small>LAHORE</small><a href="#invitation">Back to top ↑</a></footer>
-  <dialog id="detail" aria-labelledby="event-title"><button aria-label="Close invitation" class="dismiss" data-close><svg class="icon"><use href="#close"/></svg></button><img class="event-art" id="event-art" alt=""><div class="sheet-body"><p class="kicker">Faizan &amp; Zarafshan invite you to</p><h2 id="event-title"></h2><div id="standard-details"><p id="event-wording"></p><div class="detail-row"><svg class="icon"><use href="#calendar"/></svg><span id="event-date"></span></div><div class="detail-row"><svg class="icon"><use href="#pin"/></svg><span id="event-place"></span></div></div><div id="formal-details" hidden></div><button class="primary" data-close>Back to celebrations</button></div></dialog>
+  <footer><span class="monogram">F<span>&amp;</span>Z</span><span class="name-stack"><span>Faizan Moazzam</span><span>Zarafshan Saeed</span></span><small>LAHORE</small><a href="#invitation">Back to top ↑</a></footer>
+  <dialog id="detail" aria-labelledby="event-title"><button aria-label="Close invitation" class="dismiss" data-close><svg class="icon"><use href="#close"/></svg></button><img class="event-art" id="event-art" alt=""><div class="sheet-body"><p class="kicker invitation-names"><span>Faizan Moazzam</span><span>Zarafshan Saeed</span><span>invite you to</span></p><h2 id="event-title"></h2><div id="standard-details"><p id="event-wording"></p><div class="detail-row"><svg class="icon"><use href="#calendar"/></svg><span id="event-date"></span></div><div class="detail-row"><svg class="icon"><use href="#pin"/></svg><span id="event-place"></span></div></div><div id="formal-details" hidden></div><button class="primary" data-close>Back to celebrations</button></div></dialog>
   <dialog id="studio" aria-labelledby="studio-title"><button class="dismiss" data-close aria-label="Close Host Studio"><svg class="icon"><use href="#close"/></svg></button><div class="sheet-body"><p class="kicker">Host Studio</p><h2 id="studio-title">Create an invitation</h2><p>Choose the celebrations you’d like your guest to attend.</p><fieldset><legend>Ceremony cards</legend><div class="presets"><button type="button" id="all">All four</button><button type="button" id="three">Mehndi, Barat &amp; Walima</button></div><div id="options"></div></fieldset><label class="link-label" for="share-url">Guest invitation link</label><input id="share-url" readonly type="text"><div class="studio-actions"><button class="primary" id="copy">Copy link</button><a id="preview" target="_blank" rel="noopener">Preview invitation ↗</a></div><a class="whatsapp" id="whatsapp" rel="noopener noreferrer" target="_blank">Share on WhatsApp ↗</a><p class="status" id="status" role="status"></p></div></dialog>
 </body>
 </html>

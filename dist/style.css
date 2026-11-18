@@ -254,11 +254,18 @@ footer { background: #ffeff748; border-color: #fff9; }
 .request { text-transform: uppercase; font-size: 11px; letter-spacing: .9px; line-height: 1.65; }
 .couple-names { font: 400 32px/1.15 var(--serif); margin: 18px 0 0; }
 .couple-names em { display: block; font-size: 18px; line-height: 1.4; color: var(--muted); }
+.name-stack > span { display: block; }
+.hero h1.name-stack { font-size: clamp(46px, 4.5vw, 76px); line-height: 1; }
+.hero h1.name-stack em { display: block; font-size: .4em; line-height: 1.1; margin: 3px 0; }
+.couple-names small { display: block; font: 400 14px/1.5 var(--sans); margin: 9px 0; }
+.invitation-names { display: grid; gap: 4px; }
+.invitation-names > span:last-child { margin-top: 5px; }
 #formal-details h3 { margin: 24px 0 10px; font: 600 12px var(--sans); letter-spacing: 1.5px; text-transform: uppercase; }
 .programme { display: grid; grid-template-columns: max-content minmax(0, 1fr); text-align: left; margin: 0; }
 .programme dt, .programme dd { margin: 0; padding: 9px 0; line-height: 1.4; border-bottom: 1px solid #82678038; }
 .programme dt { font-weight: 600; padding-right: 14px; }
 @media (max-width: 680px) {
   .hero h1 { font-size: clamp(37px, 10.4vw, 65px); }
+  .hero h1.name-stack { font-size: clamp(33px, 8.9vw, 49px); }
   .hero-invocation { text-align: center; font-size: 18px; margin-bottom: 6px; }
 }
