@@ -246,7 +246,6 @@ footer { background: #ffeff748; border-color: #fff9; }
   text-align: left;
 }
 .hero h1 { font-size: clamp(54px, 5.8vw, 98px); }
-#event-wording { font-size: 14px; line-height: 1.6; color: var(--muted); }
 #formal-details { text-align: center; font-size: 14px; }
 #detail:has(#formal-details:not([hidden])) #event-title { text-align: center; }
 #formal-details .invocation { color: #704659; }
@@ -258,8 +257,6 @@ footer { background: #ffeff748; border-color: #fff9; }
 .hero h1.name-stack { font-size: clamp(46px, 4.5vw, 76px); line-height: 1; }
 .hero h1.name-stack em { display: block; font-size: .4em; line-height: 1.1; margin: 3px 0; }
 .couple-names small { display: block; font: 400 14px/1.5 var(--sans); margin: 9px 0; }
-.invitation-names { display: grid; gap: 4px; }
-.invitation-names > span:last-child { margin-top: 5px; }
 .wedding-programme { margin-top: 30px; font-family: var(--serif); }
 #formal-details .wedding-programme h3 {
   margin: 0 0 22px;

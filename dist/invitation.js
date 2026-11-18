@@ -40,34 +40,29 @@ if (visible.length === 1) {
 function showCeremony(event) {
   const isBarat = event.id === "baraat";
   byId("detail").dataset.ceremony = event.id;
-  byId("standard-details").hidden = isBarat;
-  byId("formal-details").hidden = !isBarat;
-  byId("detail").querySelector(".kicker").hidden = isBarat;
   byId("event-title").textContent = event.name;
   byId("event-art").src = "assets/" + event.id + ".webp";
-  if (isBarat) {
-    byId("formal-details").innerHTML = `
-      <p class="invocation" dir="rtl" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-      <p class="hosts">Miss &amp; Mrs. Moazzam</p>
-      <p class="request">Request the honour of your presence at the wedding ceremony of their beloved daughter</p>
-      <div class="couple-names name-stack"><span>Faizan Moazzam</span><small>Son of Mr. &amp; Mrs. Mazzam</small><em>with</em><span>Zarafshan Saeed</span></div>
-      <section class="wedding-programme" aria-labelledby="programme-heading">
-        <h3 id="programme-heading">Programme <span>In Sha Allah</span></h3>
-        <p class="programme-day">${formatDate(event, { weekday: "long" })}</p>
-        <p class="programme-date"><time datetime="${event.date}">19<sup>th</sup> December 2026</time></p>
-        <dl class="programme-times">
-          <div><dt>Barat Arrival</dt><dd>${event.time}</dd></div>
-          <div><dt>Lunch</dt><dd>${event.lunch}</dd></div>
-        </dl>
-        <p class="programme-venue">${venueLink(event)}</p>
-        <p class="programme-address">${event.address}</p>
-      </section>`;
-  } else {
-    byId("event-wording").textContent = event.words;
-    byId("event-date").textContent = formatDate(event, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · " + event.time + " PKT";
-    byId("event-place").innerHTML = venueLink(event);
-    byId("event-place").parentElement.hidden = !event.mapUrl;
-  }
+  byId("formal-details").innerHTML = `
+    <p class="invocation" dir="rtl" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    ${isBarat ? '<p class="hosts">Miss &amp; Mrs. Moazzam</p>' : ""}
+    <p class="request">${isBarat ? "Request the honour of your presence at the wedding ceremony of their beloved daughter" : event.words}</p>
+    <div class="couple-names name-stack">
+      <span>Faizan Moazzam</span>
+      ${isBarat ? '<small>Son of Mr. &amp; Mrs. Mazzam</small>' : ""}
+      <em>with</em>
+      <span>Zarafshan Saeed</span>
+    </div>
+    <section class="wedding-programme" aria-labelledby="programme-heading">
+      <h3 id="programme-heading">Programme <span>In Sha Allah</span></h3>
+      <p class="programme-day">${formatDate(event, { weekday: "long" })}</p>
+      <p class="programme-date"><time datetime="${event.date}">${isBarat ? "19<sup>th</sup> December 2026" : formatDate(event, { day: "numeric", month: "long", year: "numeric" })}</time></p>
+      <dl class="programme-times">
+        <div><dt>${isBarat ? "Barat Arrival" : event.name}</dt><dd>${event.time}</dd></div>
+        ${event.lunch ? `<div><dt>Lunch</dt><dd>${event.lunch}</dd></div>` : ""}
+      </dl>
+      ${event.mapUrl ? `<p class="programme-venue">${venueLink(event)}</p>` : ""}
+      ${event.address ? `<p class="programme-address">${event.address}</p>` : ""}
+    </section>`;
   byId("detail").showModal();
   byId("detail").scrollTop = 0;
 }
